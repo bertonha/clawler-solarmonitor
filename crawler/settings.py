@@ -70,7 +70,10 @@ NEWSPIDER_MODULE = 'crawler.spiders'
 #    'crawler.pipelines.SomePipeline': 300,
 #}
 
-ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
+ITEM_PIPELINES = {
+    'scrapy.pipelines.images.ImagesPipeline': 1,
+    'crawler.pipelines.SolarmonitorClearDataPipeline': 2,
+}
 
 IMAGES_STORE = os.path.join(BASE_DIR, 'images')
 
