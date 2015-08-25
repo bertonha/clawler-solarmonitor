@@ -20,7 +20,7 @@ class SolarmonitorSpider(scrapy.Spider):
 
     def parse_image_contents(self, response):
         item = SolarmonitorItem()
-        item['type'] = response.xpath('//title/text()').extract()
+        item['type'] = response.xpath('//title/text()').extract()[0]
 
         query_string = urlparse(response.url).query
         item['date'] = parse_qs(query_string)['date'][0]
