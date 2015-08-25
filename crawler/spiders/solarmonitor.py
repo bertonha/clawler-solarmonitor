@@ -43,7 +43,9 @@ class SolarmonitorSpider(scrapy.Spider):
         item['image_urls'] = [response.urljoin(i) for i in img_src]
 
         item['number'] = response.xpath('//td[@id="noaa_number"]/a/text()').extract()
-        item['location'] = response.xpath('//td[@id="position"]/text()').extract()
+
+        locations = response.xpath('//td[@id="position"]')
+        item['location'] = [' '.join(location.xpath('text()').extract()) for location in locations]
         item['hale_class'] = response.xpath('//td[@id="hale"]/text()').extract()
         item['mcintosh_class'] = response.xpath('//td[@id="mcintosh"]/text()').extract()
         item['area'] = response.xpath('//td[@id="area"]/text()').extract()
@@ -51,6 +53,7 @@ class SolarmonitorSpider(scrapy.Spider):
 
         flares = response.xpath('//td[@id="events"]')
         item['flares'] = [','.join(flare.xpath('a/text()').extract()) for flare in flares]
+
         yield item
 
         if convert_to_datetime(date) >= self.final_date:
