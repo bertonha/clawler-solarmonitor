@@ -18,5 +18,6 @@ class SolarmonitorClearDataPipeline(object):
         item['hale_class'] = clear_list(item['hale_class'])
         item['mcintosh_class'] = clear_list(item['mcintosh_class'])
         item['location'] = clear_list(item['location'])
+        item['flares'] = clear_list(item['flares'])
 
         return item

@@ -34,5 +34,7 @@ class SolarmonitorSpider(scrapy.Spider):
         item['mcintosh_class'] = response.xpath('//td[@id="mcintosh"]/text()').extract()
         item['area'] = response.xpath('//td[@id="area"]/text()').extract()
         item['number_of_spots'] = response.xpath('//td[@id="nspots"]/text()').extract()
-        #item['flares'] = response.xpath('//td[@id="events"]/a/text()').extract()
+
+        flares = response.xpath('//td[@id="events"]')
+        item['flares'] = [','.join(flare.xpath('a/text()').extract()) for flare in flares]
         yield item
