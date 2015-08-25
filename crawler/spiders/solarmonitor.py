@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from urlparse import urlparse, parse_qs
+
 import scrapy
 
 from crawler.items import SolarmonitorItem
@@ -19,6 +21,9 @@ class SolarmonitorSpider(scrapy.Spider):
     def parse_image_contents(self, response):
         item = SolarmonitorItem()
         item['type'] = response.xpath('//title/text()').extract()
+
+        query_string = urlparse(response.url).query
+        item['date'] = parse_qs(query_string)['date'][0]
 
         img_src = response.xpath('/html/body/center/table//td/img/@src').extract()
         item['image_urls'] = [response.urljoin(i) for i in img_src]
